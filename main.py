@@ -34,6 +34,9 @@ test_dataloader = DataLoader(test_dataset, batch_size=64, shuffle=False)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
+# Define emotions
+emotions = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral']
+
 # Instantiate the LSTM model
 model_0=LSTMModel(input_size=48*48, hidden_size=128, num_layers=2, num_classes=len(emotions)).to(device)
 
