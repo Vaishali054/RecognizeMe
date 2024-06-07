@@ -1,3 +1,5 @@
 /best_model.pth
 /models/__pycache__/
 /venv
+/__pycache__/
+/checkpoint.pth
