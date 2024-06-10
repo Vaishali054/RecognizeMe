@@ -1,15 +1,17 @@
 import os
 import torch
 from tqdm.auto import tqdm
-from models.lstm import LSTMModel
+from models.lstm import FER2013CNN
 
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+#accuracy function
 def accuracy_fn(y_true,y_pred):
   correct=torch.eq(y_true,y_pred).sum().item()
   acc=(correct/len(y_pred))*100
   return acc
 
+# A function to evaluate the model
 def eval_model( model : torch.nn.Module,
               data_loader:torch.utils.data.DataLoader,
                loss_fn: torch.nn.Module,
@@ -38,7 +40,6 @@ def eval_model( model : torch.nn.Module,
       "model_acc": acc}
 
 # Write a function for train_step
-
 def train_step(model : torch.nn.Module,
                data_loader: torch.utils.data.DataLoader,
                val_loader: torch.utils.data.DataLoader,
@@ -49,6 +50,7 @@ def train_step(model : torch.nn.Module,
                checkpoint_path: str,
                epochs:int,
                device: torch.device=device):
+  
   """Performs a training with model trying to learn on data_loader."""
 
   # Check if there is a saved model to load
@@ -98,7 +100,6 @@ def train_step(model : torch.nn.Module,
     #Divice total train loss and acc by length of data loader
     train_loss/=len(data_loader)
     train_acc/=len(data_loader)
-    scheduler.step()
 
 
     print(f"\nTrain loss : {train_loss:.5f} |  Train acc: {train_acc:.2f}%")
@@ -136,16 +137,16 @@ def train_step(model : torch.nn.Module,
       }, checkpoint_path)
 
       print(f"\nVal loss : {test_loss:.5f} |  Val acc: {test_acc:.2f}%")
-
+    scheduler.step(test_loss)
 
 # Write a function for test step
-
 def test_step(data_loader : torch.utils.data.DataLoader,
               loss_fn: torch.nn.Module,
               accuracy_fn,
               device: torch.device = device):
  
-  model = LSTMModel( hidden_size=128, num_layers=2, num_classes=7).to(device)
+  # model = LSTMModel( hidden_size=128, num_layers=2, num_classes=7).to(device)
+  model = FER2013CNN().to(device)
   model.load_state_dict(torch.load("best_model.pth"))
   print("Model loaded successfully")
   test_loss, test_acc=0,0
