@@ -1,9 +1,6 @@
-Certainly! Here's the complete README content in Markdown (.md) format:
-
-```markdown
 # Real-time Emotion Recognition
 
-This project demonstrates real-time emotion recognition using a webcam and an LSTM model trained on the FER-2013 dataset.
+This project demonstrates real-time emotion recognition using a webcam and an 5 layer architecture model trained on the FER-2013 dataset.
 
 ## Overview
 
@@ -19,9 +16,9 @@ The project uses computer vision techniques and deep learning to recognize facia
 
 Install the required packages using the following command:
 
-    ```bash
-    pip install torch torchvision opencv-python numpy
-    ```
+   ```bash
+   pip install torch torchvision opencv-python numpy
+   ```
 
 ## Project Structure
 
