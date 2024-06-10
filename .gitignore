@@ -3,3 +3,4 @@
 /venv
 /__pycache__/
 /checkpoint.pth
+/best_model_0.pth
